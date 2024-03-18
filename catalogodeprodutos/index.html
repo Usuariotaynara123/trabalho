@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let catalogoProdutos = [];
+
+      function adicionarP() {
+        let nome = prompt("Informe o nome do produto:");
+        let preco = parseFloat(prompt("informe o preço do produto:"));
+        let descricao = prompt("informe a descrição do produto:");
+
+        let produto = {
+          nome: nome,
+          preco: preco,
+          descricao: descricao,
+        };
+        catalogoProdutos.push(produto);
+        console.log("Produto adicionado com sucesso!");
+      }
+
+      function buscarP() {
+        let nome = prompt("informe o nome do produto que quer buscar:");
+        let filtrarValor = catalogoProdutos.find((produto) => {
+          return produto.nome == nome;
+        });
+
+        if (filtrarValor) {
+          alert(
+            "Nome: " +
+              filtrarValor.nome +
+              "\nPreço: " +
+              filtrarValor.preco +
+              "\nDescrição: " +
+              filtrarValor.descricao
+          );
+        } else {
+          alert("produto não encontrado");
+        }
+      }
+
+      function AtualizarP() {
+        let nome = prompt("Informe o produto que você quer atualizar:");
+
+        if (nome == "") {
+          alert("Produto não existe");
+          exibirTela();
+        }
+
+        let novoPreco = parseFloat(prompt("Informe o novo preço do produto:"));
+        let novaDescricao = prompt("Informe a nova descrição do produto:");
+
+        let ProdLocalizado = catalogoProdutos.find((produto) => {
+          return produto.nome === nome;
+        });
+
+        if (ProdLocalizado) {
+          ProdLocalizado.preco = novoPreco;
+          ProdLocalizado.descricao = novaDescricao;
+
+          alert(`Produto ${ProdLocalizado.nome} atualizado com sucesso!`);
+        } else {
+          alert(`Produto "${nome}" não encontrado!`);
+        }
+      }
+
+      function visualizarTodosP() {
+        let texto = "";
+
+        if (catalogoProdutos.length === 0) {
+          alert("Nenhum produto cadastrado ainda!");
+          return;
+        }
+
+        for (let produto of catalogoProdutos) {
+          let mensagem = `Nome: ${produto.nome}\nPreço: ${produto.preco}\nDescrição: ${produto.descricao}\n\n`;
+          texto = texto + mensagem;
+        }
+        alert(texto);
+      }
+      function RemoverP() {
+        let nomeProduto = prompt("Informe o produto que você quer remover:");
+
+        let ProdLocalizado = catalogoProdutos.find((produto) => {
+          return produto.nome === nomeProduto;
+        });
+
+        if (!ProdLocalizado) {
+          alert("Produto não encontrado!");
+          return;
+        }
+
+        let produtosFiltrados = catalogoProdutos.filter((produto) => {
+          return produto.nome !== nomeProduto;
+        });
+
+        catalogoProdutos = produtosFiltrados;
+        alert("Produto removido com sucesso!");
+      }
+      let opcao;
+      function exibirTela() {
+        do {
+          opcao = prompt(
+            "Selecione uma das alternativas abaixo:\n 1- ADICIONAR PRODUTO\n 2- PROCURAR POR PRODUTO\n 3- ATUALIZAR ALGUM PRODUTO\n 4- VIZUALIZAR TODOS OS PRODUTOS\n 5- REMOVER ALGUM PRODUTO\n 6- SAIR"
+          );
+
+          if (opcao == "1") {
+            adicionarP();
+          } else if (opcao == "2") {
+            buscarP();
+          } else if (opcao == "3") {
+            AtualizarP();
+          } else if (opcao == "4") {
+            visualizarTodosP();
+          } else if (opcao == "5") {
+            RemoverP();
+          } else if (opcao == "6") {
+            alert("Saindo do programa.");
+          } else {
+            alert("Opção inválida.");
+          }
+        } while (opcao !== "6");
+      }
+      exibirTela();
+    </script>
+  </body>
+</html>
